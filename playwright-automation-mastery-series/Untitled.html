@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playwright Locators Demo Page</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: auto; background-color: #f4f4f4; color: #333; }
+        h1, h2, h3 { color: #0056b3; }
+        section { background-color: #fff; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .button-group button { margin-right: 10px; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; background-color: #007bff; color: white; font-size: 16px; }
+        .button-group button:hover { background-color: #0056b3; }
+        input[type="text"], input[type="email"], input[type="password"], input[type="search"] {
+            width: calc(100% - 22px); padding: 10px; margin-top: 5px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px;
+        }
+        .message { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 10px; border-radius: 5px; margin-top: 15px; display: none; }
+        .product-item { border: 1px solid #eee; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
+        .product-item h3 { margin-top: 0; }
+        .product-item .status { color: red; font-weight: bold; }
+        nav ul { list-style: none; padding: 0; }
+        nav ul li { display: inline; margin-right: 20px; }
+        nav ul li a { text-decoration: none; color: #007bff; }
+        nav ul li a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <h1>Playwright Locators Demonstration</h1>
+    <p>This page is designed to showcase various ways to locate elements using Playwright.</p>
+
+    <section>
+        <h2>User-Facing Locators (Preferred)</h2>
+
+        <h3>1. `page.getByRole()` Examples</h3>
+        <p>Locating elements by their role and accessible name.</p>
+        <div class="button-group">
+            <button id="submitBtn" role="button">Submit Form</button>
+            <button role="button" disabled>Disabled Button</button>
+            <a href="#section2" role="link">Go to Section 2</a>
+        </div>
+        <div style="margin-top: 20px;">
+            <label for="usernameInput">User Name</label>
+            <input id="usernameInput" type="text" placeholder="Enter your username" aria-label="User Name">
+            <label for="passwordInput">Password</label>
+            <input id="passwordInput" type="password" aria-label="Password">
+            <input type="checkbox" id="agreeCheckbox" aria-label="Agree to Terms">
+            <label for="agreeCheckbox">Agree to Terms</label>
+        </div>
+        <h3>Welcome to Our Awesome Application!</h3>
+        <span class="message" id="formSuccessMessage">Form Submitted Successfully!</span>
+
+    </section>
+
+    <section>
+        <h3>2. `page.getByText()` Examples</h3>
+        <p>Finding elements based on their visible text content.</p>
+        <p>Click on the <a href="#" id="loginLink">Login here</a> link to proceed.</p>
+        <div>
+            <span>Detailed Product Description</span>
+            <p>Another piece of text you might want to locate.</p>
+            <p>
+                <span>Status:</span> <span id="currentStatus">Active</span>
+            </p>
+        </div>
+        <button id="alertButton">Show Alert Message</button>
+        <span class="message" id="alertMessage">This is an alert message!</span>
+
+    </section>
+
+    <section>
+        <h3>3. `page.getByLabel()` Examples</h3>
+        <p>Targeting form controls using their associated labels.</p>
+        <div>
+            <label for="emailField">Email Address:</label>
+            <input type="email" id="emailField">
+        </div>
+        <div>
+            <label>Confirm Password: <input type="password" id="confirmPasswordField"></label>
+        </div>
+        <div>
+            <label>Quantity:
+                <select id="quantitySelect">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </label>
+        </div>
+    </section>
+
+    <section>
+        <h3>4. `page.getByPlaceholder()` Examples</h3>
+        <p>Locating input fields by their placeholder text.</p>
+        <div>
+            <input type="search" placeholder="Search products...">
+        </div>
+        <div>
+            <input type="text" placeholder="Your Name">
+        </div>
+    </section>
+
+    <section>
+        <h3>5. `page.getByAltText()` Examples</h3>
+        <p>Interacting with images using their alternative text attribute.</p>
+        <div>
+            <img src="https://placehold.co/150x150/FF0000/FFFFFF?text=Company+Logo" alt="Our Company Logo" style="cursor: pointer;" onclick="alert('Logo Clicked!')">
+            <img src="https://placehold.co/100x100/0000FF/FFFFFF?text=Product+Image" alt="Image of Product X">
+        </div>
+    </section>
+
+    <section>
+        <h3>6. `page.getByTitle()` Examples</h3>
+        <p>Finding elements based on their title attribute (often for tooltips).</p>
+        <button title="Delete this item">🗑️ Delete Item</button>
+        <span title="Information about this field">ℹ️</span>
+    </section>
+
+    <section>
+        <h3>7. `page.getByTestId()` Examples</h3>
+        <p>Using custom <code>data-testid</code> attributes for robust testing hooks.</p>
+        <div data-testid="user-profile-card">
+            <h3 data-testid="user-name">Jane Doe</h3>
+            <p data-testid="user-email">jane.doe@example.com</p>
+            <button data-testid="edit-profile-button">Edit Profile</button>
+        </div>
+        <div data-testid="notification-banner">
+            <p>You have new messages!</p>
+            <button data-testid="dismiss-notification">Dismiss</button>
+        </div>
+        <button data-qa-id="submit-order-button">Submit Order (qa-id)</button>
+    </section>
+
+    <section id="section2">
+        <h2>Traditional Selectors (When Necessary)</h2>
+
+        <h3>1. CSS Selectors</h3>
+        <p>Using <code>#id</code>, <code>.class</code>, tag names, and attribute selectors.</p>
+        <div id="product-details">
+            <p class="description">This is the main product description.</p>
+            <button class="add-to-cart-btn" data-product-id="PROD001">Add to Cart</button>
+            <button class="add-to-cart-btn" disabled>Out of Stock</button>
+        </div>
+        <ul class="item-list">
+            <li>First Item</li>
+            <li class="active-item">Second Item</li>
+        </ul>
+        <input type="text" name="dataInput" class="form-input">
+        <span id="cssSelectionMessage" class="message" style="display: none;">CSS Selection Worked!</span>
+    </section>
+
+    <section>
+        <h3>2. XPath Selectors</h3>
+        <p>More flexible but often more brittle. Use as a last resort.</p>
+        <div class="user-widget">
+            <span>Welcome, <b>Guest!</b></span>
+            <p>Your current status: <span class="status-text">Logged Out</span></p>
+            <button>Login Here</button>
+        </div>
+        <div class="content-block">
+            <p>First paragraph.</p>
+            <p>Second paragraph.</p>
+            <a href="#">Learn More</a>
+        </div>
+        <button id="xpathClickBtn">Click me with XPath</button>
+    </section>
+
+    <section>
+        <h2>Advanced Locator Techniques</h2>
+
+        <h3>1. Chaining Locators</h3>
+        <p>Narrowing down searches by combining locators.</p>
+        <nav id="main-nav">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="sidebar">
+            <h3>Quick Links</h3>
+            <a href="#quick-faq">FAQ</a>
+            <a href="#quick-contact">Contact Support</a>
+        </div>
+    </section>
+
+    <section>
+        <h3>2. Filtering Locators (`.filter()`)</h3>
+        <p>Refining a set of matched elements.</p>
+        <div class="inventory-list">
+            <div class="product-card">
+                <h4>Laptop Pro</h4>
+                <p>Price: $1200</p>
+                <button>Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <h4>Mouse X</h4>
+                <p>Price: $25</p>
+                <span>Out of Stock</span>
+            </div>
+            <div class="product-card">
+                <h4>Keyboard Mechanical</h4>
+                <p>Price: $90</p>
+                <button>Add to Cart</button>
+            </div>
+        </div>
+        <div class="order-list">
+            <div class="order-item">
+                <p>Order #123</p>
+                <button>View Details</button>
+            </div>
+            <div class="order-item">
+                <p>Order #124</p>
+                <p>Status: Shipped</p>
+                <button>View Details</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Simple JS to simulate some interactions for visibility
+        document.getElementById('submitBtn').addEventListener('click', () => {
+            document.getElementById('formSuccessMessage').style.display = 'block';
+            // IMPORTANT: Removed the setTimeout that hides the message, so it stays visible for tests.
+            // If you want it to disappear after a while in the manual demo, you can add this back:
+            // setTimeout(() => { document.getElementById('formSuccessMessage').style.display = 'none'; }, 3000);
+        });
+        document.getElementById('alertButton').addEventListener('click', () => {
+            document.getElementById('alertMessage').style.display = 'block';
+            setTimeout(() => { document.getElementById('alertMessage').style.display = 'none'; }, 3000);
+        });
+        document.getElementById('xpathClickBtn').addEventListener('click', () => {
+             document.getElementById('cssSelectionMessage').textContent = 'XPath Clicked!';
+             document.getElementById('cssSelectionMessage').style.display = 'block';
+             setTimeout(() => { document.getElementById('cssSelectionMessage').style.display = 'none'; }, 3000);
+        });
+    </script>
+
+</body>
+</html>
