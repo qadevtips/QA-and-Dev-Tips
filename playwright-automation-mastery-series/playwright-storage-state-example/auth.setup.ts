@@ -24,6 +24,8 @@ setup('save authenticated state', async ({ page }) => {
     fs.mkdirSync(authDir, { recursive: true });
   }
 
-  // Save storage state
+  // Save storage state and confirm it landed on disk, otherwise every test that
+  // reuses it fails later with an unrelated "not logged in" error.
   await page.context().storageState({ path: authFile });
+  expect(fs.existsSync(authFile), `Storage state was not written to ${authFile}`).toBe(true);
 });

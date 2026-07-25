@@ -34,8 +34,12 @@ test.describe('@smoke Login & Secure Area Suite', () => {
 
   test.afterEach(async ({ page }) => {
     console.log('↩️ Checking if logout button exists...');
-    if (await page.isVisible('a.button')) {
-      await page.click('a.button');
+    const logoutButton = page.locator('a.button');
+    if (await logoutButton.isVisible()) {
+      await logoutButton.click();
+      // A teardown that quietly fails leaves the next test logged in, so the
+      // logout is verified rather than assumed.
+      await expect(page.locator('#flash')).toContainText('You logged out of the secure area!');
       console.log('🚪 Logged out successfully');
     }
   });
