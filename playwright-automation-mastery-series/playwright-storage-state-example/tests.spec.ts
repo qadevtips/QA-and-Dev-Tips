@@ -1,9 +1,8 @@
 // tests.spec.ts
 import { test, expect } from '@playwright/test';
+import { AUTH_FILE } from '../support/auth';
 
-const STORAGE_STATE_PATH = 'tests/.auth/user.json';
-
-test.use({ storageState: STORAGE_STATE_PATH }); // Use saved session
+test.use({ storageState: AUTH_FILE }); // Use saved session
 
 test('User should be able to log out from the inventory page', async ({ page }) => {
   // Page starts already logged in

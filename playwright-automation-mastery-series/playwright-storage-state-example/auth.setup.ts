@@ -1,22 +1,15 @@
 // auth.setup.ts (Updated for SauceDemo)
 
-import { test as setup, expect } from '@playwright/test';
+import { test as setup } from '@playwright/test';
 import * as path from 'path';
 import * as fs from 'fs';
+import { AUTH_FILE, loginToSauceDemo } from '../support/auth';
 
-const authFile = 'tests/.auth/user.json';
+const authFile = AUTH_FILE;
 
 setup('save authenticated state', async ({ page }) => {
-  // Navigate to the Sauce Demo login page
-  await page.goto('https://www.saucedemo.com/');
-
-  // Fill in the demo credentials
-  await page.fill('#user-name', 'standard_user');
-  await page.fill('#password', 'secret_sauce');
-  await page.click('#login-button');
-
-  // Verify successful login by checking presence of inventory container
-  await expect(page.locator('.inventory_list')).toBeVisible();
+  // Log in to SauceDemo and verify the inventory is shown
+  await loginToSauceDemo(page);
 
   // Ensure directory exists
   const authDir = path.dirname(authFile);
