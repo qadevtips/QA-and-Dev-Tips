@@ -18,10 +18,11 @@ def route_traffic_with_failover(primary_healthy, backup_healthy):
     print("CRITICAL ERROR: All regional cloud environments are currently down!")
     return "TOTAL_OUTAGE"
 
-# Simulate a severe thermal event or network blackout on the primary cluster
-primary_region_status = False
-backup_region_status = True
+if __name__ == "__main__":
+    # Simulate a severe thermal event or network blackout on the primary cluster
+    primary_region_status = False
+    backup_region_status = True
 
-print("Starting infrastructure orchestration monitor...")
-current_route = route_traffic_with_failover(primary_region_status, backup_region_status)
-print(f"Monitoring complete. Current routing pathway set to: {current_route}")
+    print("Starting infrastructure orchestration monitor...")
+    current_route = route_traffic_with_failover(primary_region_status, backup_region_status)
+    print(f"Monitoring complete. Current routing pathway set to: {current_route}")
