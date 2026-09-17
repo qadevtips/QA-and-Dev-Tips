@@ -1,13 +1,10 @@
 import { test, expect } from '@playwright/test';
-
-// Define the base URL for your demo HTML file
-// IMPORTANT: Replace this with your actual GitHub Pages URL or local server URL
-const DEMO_PAGE_URL = 'http://localhost:8080/playwright-automation-mastery-series/demo.html';
+import { gotoDemoPage } from '../support/demo-page';
 
 test.describe('Part 1: User-Facing Locators', () => {
 
   test.beforeEach(async ({ page }) => {
-    await page.goto(DEMO_PAGE_URL);
+    await gotoDemoPage(page);
   });
 
   test('should locate elements by Role (button)', async ({ page }) => {
