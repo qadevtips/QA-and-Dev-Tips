@@ -1,5 +1,9 @@
 import { test, expect } from '@playwright/test';
 
+// Credentials come from the environment; the defaults are the-internet's public demo account.
+const USERNAME = process.env.HEROKUAPP_USERNAME ?? 'tomsmith';
+const PASSWORD = process.env.HEROKUAPP_PASSWORD ?? 'SuperSecretPassword!';
+
 // ---- Global Hooks (apply to all suites in this file) ----
 test.beforeAll(async () => {
   console.log('🌍 Global beforeAll: setting up test data or environment...');
@@ -41,14 +45,14 @@ test.describe('@smoke Login & Secure Area Suite', () => {
   });
 
   test('Successful login shows secure area', async ({ page }) => {
-    await page.fill('input#username', 'tomsmith');
-    await page.fill('input#password', 'SuperSecretPassword!');
+    await page.fill('input#username', USERNAME);
+    await page.fill('input#password', PASSWORD);
     await page.click('button[type="submit"]');
     await expect(page.locator('h2')).toHaveText('Secure Area');
   });
 
   test('Invalid login shows error message', async ({ page }) => {
-    await page.fill('input#username', 'tomsmith');
+    await page.fill('input#username', USERNAME);
     await page.fill('input#password', 'wrongpassword');
     await page.click('button[type="submit"]');
     await expect(page.locator('#flash')).toContainText('Your password is invalid!');

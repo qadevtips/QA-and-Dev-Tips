@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Secrets / local configuration
+.env
+.env.*
+!.env.example
+
+# Playwright authenticated session state (contains live cookies/tokens)
+**/.auth/
+**/storage-state*.json
+**/storageState*.json
+
+# Playwright output
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# Test artifacts
+**/downloads/

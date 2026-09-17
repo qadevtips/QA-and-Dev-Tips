@@ -6,13 +6,17 @@ import * as fs from 'fs';
 
 const authFile = 'tests/.auth/user.json';
 
+// Credentials come from the environment; the defaults are SauceDemo's public demo account.
+const USERNAME = process.env.SAUCEDEMO_USERNAME ?? 'standard_user';
+const PASSWORD = process.env.SAUCEDEMO_PASSWORD ?? 'secret_sauce';
+
 setup('save authenticated state', async ({ page }) => {
   // Navigate to the Sauce Demo login page
   await page.goto('https://www.saucedemo.com/');
 
   // Fill in the demo credentials
-  await page.fill('#user-name', 'standard_user');
-  await page.fill('#password', 'secret_sauce');
+  await page.fill('#user-name', USERNAME);
+  await page.fill('#password', PASSWORD);
   await page.click('#login-button');
 
   // Verify successful login by checking presence of inventory container
