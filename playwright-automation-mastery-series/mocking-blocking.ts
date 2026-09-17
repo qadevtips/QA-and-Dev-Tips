@@ -3,11 +3,23 @@ import { test, expect } from '@playwright/test';
 test('should give different login responses', async ({ page }) => {
   // We tell Playwright to stop any request to our login page.
   await page.route('**/api/login', async route => {
-    // We get the information that was sent from the form.
-    const postData = route.request().postDataJSON();
+    // An exception thrown inside a route handler is swallowed by Playwright and
+    // leaves the request hanging until the test times out, so a malformed body
+    // is turned into an explicit 400 response instead.
+    let postData: { username?: string; password?: string };
+    try {
+      postData = route.request().postDataJSON();
+    } catch (error) {
+      await route.fulfill({
+        status: 400,
+        contentType: 'application/json',
+        body: JSON.stringify({ message: `Malformed login request: ${error}` })
+      });
+      return;
+    }
 
     // IF the username and password are correct...
-    if (postData.username === 'testuser' && postData.password === 'password123') {
+    if (postData?.username === 'testuser' && postData?.password === 'password123') {
       // ...THEN we tell the page the login was successful.
       await route.fulfill({
         status: 200,
@@ -27,10 +39,14 @@ test('should give different login responses', async ({ page }) => {
   // 1. Navigate to our local login form.
   await page.goto('http://127.0.0.1:8081/iFrame demo main.html');
 
-  // 2. Click the login button, which sends our mock request.
+  // 2. Fill valid credentials so the mock returns the success branch.
+  await page.locator('#username').fill('testuser');
+  await page.locator('#password').fill('password123');
+
+  // 3. Click the login button, which sends our mock request.
   await page.getByRole('button', { name: 'Log In' }).click();
 
-  // 3. Check for the "Login successful!" message on the page.
+  // 4. Check for the "Login successful!" message on the page.
   await expect(page.locator('#message')).toHaveText('Login successful!');
   await expect(page.locator('#message')).toHaveCSS('color', 'rgb(0, 128, 0)');
 });
