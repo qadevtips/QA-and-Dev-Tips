@@ -1,6 +1,3 @@
-Sure — here’s a ready-to-copy README file you can paste directly into your `README.md`:
-
-````markdown
 # QA and Dev Tips
 
 > A curated collection of QA automation examples, developer productivity techniques, and best-practice playbooks for modern QA & Dev teams.
@@ -69,8 +66,3 @@ If you would like to add your own tips, scripts, or improvements:
 ## 📄 License
 
 This project is licensed under the MIT License — see the `LICENSE` file for details.
-
-```
-
-Would you like me to automatically create a `CONTRIBUTING.md` and example folder READMEs as well?
-```
