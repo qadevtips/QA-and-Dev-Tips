@@ -63,6 +63,14 @@ If you would like to add your own tips, scripts, or improvements:
 
 ---
 
+## ☕ Support the Project
+
+If you found these QA and Dev tips helpful, consider buying me a coffee!
+
+[<img src="https://storage.ko-fi.com/cdn/kofi3.png?v=3" height="36" alt="Buy Me a Coffee at ko-fi.com" />](https://ko-fi.com/qaanddevtips)
+
+---
+
 ## 📄 License
 
 This project is licensed under the MIT License — see the `LICENSE` file for details.
